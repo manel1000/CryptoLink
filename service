@@ -60,7 +60,22 @@ async function getStudentCountPerSection() {
         throw error; // Re-throw the error to be handled by the controller
     }
 }
+
+async function getDisabilityStatistics() {
+    const [rows] = await pool.query(`
+      SELECT 
+        COUNT(*) AS total_students,
+        SUM(CASE WHEN situation_physique = 'HANDICAPE' THEN 1 ELSE 0 END) AS handicap_count,
+        (SUM(CASE WHEN situation_physique = 'HANDICAPE' THEN 1 ELSE 0 END) / COUNT(*)) * 100 AS percentage
+      FROM Students
+    `);
+    
+    return rows[0];
+  }
+
+
 module.exports = {
     getStudentCountPerPalier,
     getStudentCountPerSection,
+   getDisabilityStatistics};
     };
