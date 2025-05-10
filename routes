@@ -1,0 +1,22 @@
+// routes/statisticsRoutes.js
+const express = require ('express');
+const router = express.Router();
+const stats= require('../controllers/statistiqueController');
+
+
+// Example: GET /api/statistics/students-per-palier
+router.get('/students-per-palier', stats.getStudentsPerPalierStats);
+// You might want to protect this route based on user roles from your schema:
+ 
+
+// NEW ROUTE: For students per section
+// Example: GET /api/statistics/students-per-section 
+router.get('/students-per-section', stats.getStudentsPerSectionStats);
+// Example with auth (remember to add 'view_statistiques' or similar to your Permissions table and assign it):
+// router.get('/students-per-section', authenticate, authorize(['Admin', 'Chef_Département']), statisticsController.getStudentsPerSectionStats);
+
+
+
+
+module.exports = router;
+
